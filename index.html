@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
+<title>نور المسلم | Noor Muslim</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ background:#080808;color:#f5f0e6;
+ font-family:Tahoma,Arial,sans-serif;
+ padding-bottom:85px;transition:.3s
+}
+header{
+ text-align:center;padding:35px 15px 25px;
+ background:linear-gradient(145deg,#21190e,#080808 75%);
+ border-bottom:1px solid #806332
+}
+.logo{color:#dfbd73;font-size:34px;font-weight:bold;margin-bottom:10px}
+.subtitle{color:#c1ad82;font-size:13px}
+.date{margin-top:18px;color:#dfbd73;font-size:14px}
+.theme-button{
+ margin-top:20px;padding:11px 25px;border:1px solid #d8b66a;
+ border-radius:25px;background:#151515;color:#dfbd73;
+ font-size:14px;cursor:pointer
+}
+.container{padding:20px;max-width:650px;margin:auto}
+.welcome{
+ padding:23px;border:1px solid #574426;border-radius:18px;
+ background:linear-gradient(135deg,#201a10,#0d0d0d);
+ text-align:center;margin-bottom:25px
+}
+.welcome h2{color:#dfbd73;margin-bottom:12px;font-size:20px}
+.welcome p{line-height:1.9;color:#d0c8b9}
+.section-title{color:#dfbd73;margin:25px 0 15px;font-size:21px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.item{
+ background:linear-gradient(145deg,#1b1812,#101010);
+ border:1px solid #574426;border-radius:16px;
+ padding:24px 10px;text-align:center;cursor:pointer;transition:.2s
+}
+.item:active{transform:scale(.96)}
+.icon{font-size:32px;margin-bottom:12px}
+.item h3{color:#dfbd73;font-size:16px}
+#content{
+ display:none;
+ width:100%;
+ max-width:none;
+ box-sizing:border-box;
+ margin-top:5px;
+ padding:2px 0;
+ border:0;
+ border-radius:0;
+ background:transparent;
+ line-height:2
+}
+#sectionName{color:#dfbd73;margin-bottom:15px}
+.back{
+ color:#dfbd73;background:transparent;border:1px solid #806332;
+ padding:9px 18px;border-radius:9px;margin-bottom:15px;cursor:pointer
+}
+footer{
+ position:fixed;bottom:0;width:100%;background:#101010;
+ border-top:1px solid #574426;text-align:center;
+ padding:15px;color:#dfbd73;font-size:13px
+}
+
+/* واجهة القرآن */
+.quran-search{
+ width:100%;padding:13px;margin:12px 0 18px;
+ border:1px solid #806332;border-radius:10px;
+ background:#080808;color:#fff;font-size:16px
+}
+.surah-list{display:grid;gap:9px}
+.surah-button{
+ width:100%;display:flex;justify-content:space-between;
+ align-items:center;padding:14px;
+ border:1px solid #574426;border-radius:12px;
+ background:#1b1812;color:#dfbd73;
+ font-size:16px;text-align:right;cursor:pointer
+}
+.surah-button small{color:#c1ad82;font-size:12px}
+.quran-heading{text-align:center;color:#dfbd73;margin:15px 0}
+.quran-info{display:none}
+
+/* الآيات متتابعة مثل نص المصحف */
+.quran-page{
+ width:100%;
+ max-width:none;
+ box-sizing:border-box;
+ background:transparent;
+ border:0;
+ border-radius:0;
+ padding:2px 0;
+ margin:5px 0
+}
+.quran-text{
+ direction:rtl;
+ text-align:justify;
+ text-align-last:center;
+ font-family:"Traditional Arabic","Noto Naskh Arabic",serif;
+ font-size:21px;
+ line-height:2.5;
+ font-weight:normal;
+ color:#f5f0e6;
+ overflow-wrap:break-word
+}
+.ayah-number{
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ width:25px;height:25px;
+ border:1px solid #c6a45d;
+ border-radius:50%;
+ font-family:Tahoma,Arial,sans-serif;
+ font-size:11px;
+ line-height:1;
+ color:#dfbd73;
+ margin:0 4px;
+ vertical-align:middle;
+ white-space:nowrap
+}
+.message{text-align:center;padding:20px;color:#dfbd73}
+
+body.light-mode{background:#f5f2eb;color:#171717}
+body.light-mode header{
+ background:linear-gradient(145deg,#fff5dc,#fff);
+ border-color:#c5a45d
+}
+body.light-mode .logo,
+body.light-mode .date,
+body.light-mode .section-title{color:#92702e}
+body.light-mode .subtitle{color:#75633f}
+body.light-mode .welcome{
+ background:linear-gradient(135deg,#fff8e8,#fff);
+ border-color:#c6a45d
+}
+body.light-mode .welcome h2,
+body.light-mode .item h3,
+body.light-mode #sectionName{color:#92702e}
+body.light-mode .welcome p{color:#444}
+body.light-mode .item,
+body.light-mode #content{
+ background:#fff;color:#171717;border-color:#c6a45d
+}
+body.light-mode .theme-button{
+ background:#fff;color:#92702e;border-color:#c6a45d
+}
+body.light-mode .back{color:#92702e;border-color:#c6a45d}
+body.light-mode footer{
+ background:#fff;color:#92702e;border-color:#c6a45d
+}
+body.light-mode .quran-search{
+ background:#fff;color:#171717;border-color:#c6a45d
+}
+body.light-mode .surah-button{
+ background:#fff;color:#92702e;border-color:#c6a45d
+}
+body.light-mode .surah-button small,
+body.light-mode .quran-info{color:#75633f}
+body.light-mode .quran-page{
+ background:#fffdf7;border-color:#c6a45d
+}
+body.light-mode .quran-text{color:#171717}
+body.light-mode .ayah-number{color:#92702e;border-color:#c6a45d}
+
+/* تصميم القراءة النباتي - التصميم الخامس */
+body:has(.quran-page) {
+ background:#f5f5eb;
+ color:#263528;
+ padding-bottom:75px;
+}
+
+body:has(.quran-page) .container {
+ width:100%;
+ max-width:none;
+ margin:0;
+ padding:0;
+}
+
+body:has(.quran-page) header {
+ background:#f5f5eb;
+ border-bottom:1px solid #d5ddc9;
+}
+
+body:has(.quran-page) .logo,
+body:has(.quran-page) .date,
+body:has(.quran-page) .section-title {
+ color:#315b38;
+}
+
+body:has(.quran-page) .subtitle {
+ color:#687c65;
+}
+
+#content:has(.quran-page) {
+ display:block;
+ width:100%;
+ max-width:none;
+ margin:0;
+ padding:12px 14px 90px;
+ background:#fffdf7;
+ color:#263528;
+ border:0;
+ border-radius:0;
+ min-height:70vh;
+}
+
+body:has(.quran-page) .back {
+ color:#315b38;
+ border-color:#8ba47c;
+ background:transparent;
+}
+
+body:has(.quran-page) .quran-heading {
+ color:#315b38;
+ font-size:25px;
+ margin:22px 0;
+}
+
+body:has(.quran-page) .quran-page {
+ width:100%;
+ max-width:none;
+ background:transparent;
+ border:0;
+ border-radius:0;
+ padding:0;
+ margin:10px 0;
+}
+
+body:has(.quran-page) .quran-text {
+ color:#202c22;
+ font-size:23px;
+ line-height:2.5;
+ text-align:justify;
+ text-align-last:center;
+}
+
+body:has(.quran-page) .ayah-number {
+ color:#315b38;
+ border-color:#78966c;
+ background:#f5f7ed;
+}
+
+body:has(.quran-page) footer {
+ background:#eef2e7;
+ color:#315b38;
+ border-color:#b7c6a9;
+}
+
+body:has(.quran-page) .theme-button {
+ background:#eef2e7;
+ color:#315b38;
+ border-color:#8ba47c;
+}
+
+</style>
+</head>
+
+<body>
+<header>
+ <div class="logo">☾ نور المسلم</div>
+ <div class="subtitle">نورٌ يرافقك في كل يوم</div>
+ <div class="date" id="date"></div>
+ <button class="theme-button" id="themeToggle" onclick="toggleTheme()">☀️ الوضع الفاتح</button>
+</header>
+
+<main class="container">
+
+ <div id="homePanel">
+  <section class="welcome">
+   <h2>السلام عليكم ورحمة الله وبركاته</h2>
+   <p>أهلاً بك في نور المسلم، رفيقك اليومي للعبادة والذكر والطمأنينة.</p>
+  </section>
+
+  <h2 class="section-title">أقسام التطبيق</h2>
+  <div class="grid">
+   <div class="item" onclick="openQuran()">
+    <div class="icon">📖</div><h3>القرآن الكريم</h3>
+   </div>
+
+   
+   <div class="item" onclick="openSection('الأذكار','قريباً سنضيف الأذكار الصباحية والمسائية وأذكار اليوم.')">
+    <div class="icon">🤲</div><h3>الأذكار</h3>
+   </div>
+   <div class="item" onclick="openSection('الأحاديث النبوية','قريباً سنضيف مجموعة من الأحاديث النبوية الموثوقة.')">
+    <div class="icon">📚</div><h3>الأحاديث</h3>
+   </div>
+   <div class="item" onclick="openSection('الرقية الشرعية','قريباً سنضيف آيات وأدعية الرقية الشرعية.')">
+    <div class="icon">🌙</div><h3>الرقية الشرعية</h3>
+   </div>
+   <div class="item" onclick="openSection('أوقات الصلاة','سنضيف مواقيت الصلاة حسب المدينة وطريقة الحساب.')">
+    <div class="icon">🕌</div><h3>أوقات الصلاة</h3>
+   </div>
+   <div class="item" onclick="openSection('اتجاه القبلة','سنضيف بوصلة لتحديد اتجاه القبلة.')">
+    <div class="icon">🕋</div><h3>اتجاه القبلة</h3>
+   </div>
+   <div class="item" onclick="openSection('السبحة الإلكترونية','سبح الله واحسب أذكارك بسهولة.')">
+    <div class="icon">📿</div><h3>السبحة</h3>
+   </div>
+   <div class="item" onclick="openSection('دعاء اليوم','اللهم اجعل يومنا مليئاً بالخير والبركة واغفر لنا وارحمنا.')">
+    <div class="icon">✨</div><h3>دعاء اليوم</h3>
+   </div>
+  </div>
+ </div>
+
+ <section id="content">
+  <button class="back" onclick="closeSection()">رجوع</button>
+  <h2 id="sectionName"></h2>
+  <div id="sectionText"></div>
+ </section>
+</main>
+
+<footer>نور المسلم © 2026</footer>
+
+<script>
+const dateElement=document.getElementById("date");
+dateElement.textContent=new Date().toLocaleDateString("ar",{
+ weekday:"long",year:"numeric",month:"long",day:"numeric"
+});
+
+function showContent(name){
+ document.getElementById("sectionName").textContent=name;
+ document.getElementById("content").style.display="block";
+ document.getElementById("content").scrollIntoView({behavior:"smooth"});
+}
+
+function openSection(name,text){
+ document.getElementById("homePanel").style.display="block";
+ showContent(name);
+ document.getElementById("sectionText").textContent=text;
+}
+
+function closeSection(){
+ document.getElementById("content").style.display="none";
+ document.getElementById("homePanel").style.display="block";
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+let quranData=null;
+
+async function openQuran(){
+ document.getElementById("homePanel").style.display="none";
+ showContent("القرآن الكريم");
+
+ const area=document.getElementById("sectionText");
+ area.innerHTML='<p class="message">جارٍ تحميل القرآن الكريم...</p>';
+
+ if(!quranData){
+  try{
+   const response=await fetch("./quran.json");
+   if(!response.ok) throw new Error("تعذر تحميل الملف");
+   const result=await response.json();
+   if(!result.data || !Array.isArray(result.data.surahs)){
+    throw new Error("صيغة ملف القرآن غير صحيحة");
+   }
+   quranData=result.data.surahs;
+  }catch(error){
+   area.innerHTML='<p class="message">تعذر فتح القرآن. تأكد من وجود ملف quran.json بجانب index.html ثم أعد المحاولة.</p>';
+   return;
+  }
+ }
+ renderSurahList();
+}
+
+function renderSurahList(search=""){
+ const area=document.getElementById("sectionText");
+ area.innerHTML="";
+
+ const homeBack=document.createElement("button");
+ homeBack.className="back";
+ homeBack.textContent="العودة إلى الرئيسية";
+ homeBack.onclick=closeSection;
+ area.appendChild(homeBack);
+
+ const back=document.createElement("p");
+ back.className="quran-info";
+ back.textContent="القرآن الكريم كاملاً — 114 سورة";
+ area.appendChild(back);
+
+ const input=document.createElement("input");
+ input.className="quran-search";
+ input.placeholder="ابحث عن اسم السورة...";
+ input.value=search;
+ input.setAttribute("aria-label","البحث عن سورة");
+ area.appendChild(input);
+
+ const list=document.createElement("div");
+ list.className="surah-list";
+ area.appendChild(list);
+
+ function fillList(value){
+  list.innerHTML="";
+  const filtered=quranData.filter(s=>s.name.includes(value.trim()));
+  if(filtered.length===0){
+   list.innerHTML='<p class="message">لم يتم العثور على سورة بهذا الاسم.</p>';
+   return;
+  }
+  filtered.forEach(s=>{
+   const button=document.createElement("button");
+   button.className="surah-button";
+
+   const name=document.createElement("span");
+   name.textContent=s.number+". "+s.name;
+
+   const count=document.createElement("small");
+   count.textContent=s.ayahs.length+" آية";
+
+   button.append(name,count);
+   button.onclick=()=>showSurah(s.number);
+   list.appendChild(button);
+  });
+ }
+ input.addEventListener("input",()=>fillList(input.value));
+ fillList(search);
+}
+
+function showSurah(number){
+ const surah=quranData.find(s=>s.number===number);
+ if(!surah)return;
+
+ const area=document.getElementById("sectionText");
+ area.innerHTML="";
+
+ const back=document.createElement("button");
+ back.className="back";
+ back.textContent="رجوع إلى السور";
+ back.onclick=()=>renderSurahList();
+ area.appendChild(back);
+
+ const homeBack=document.createElement("button");
+ homeBack.className="back";
+ homeBack.style.marginRight="8px";
+ homeBack.textContent="الرئيسية";
+ homeBack.onclick=closeSection;
+ area.appendChild(homeBack);
+
+ const heading=document.createElement("h2");
+ heading.className="quran-heading";
+ heading.textContent=surah.name;
+ area.appendChild(heading);
+
+ const info=document.createElement("p");
+ info.className="quran-info";
+ info.textContent=surah.ayahs.length+" آية";
+ area.appendChild(info);
+
+ const page=document.createElement("div");
+ page.className="quran-page";
+
+ const text=document.createElement("div");
+ text.className="quran-text";
+
+ surah.ayahs.forEach((ayah,index)=>{
+  text.appendChild(document.createTextNode(ayah.text+" "));
+
+  const numberMark=document.createElement("span");
+  numberMark.className="ayah-number";
+  numberMark.textContent=ayah.numberInSurah;
+  numberMark.setAttribute("aria-label","الآية "+ayah.numberInSurah);
+  text.appendChild(numberMark);
+
+  if(index<surah.ayahs.length-1){
+   text.appendChild(document.createTextNode(" "));
+  }
+ });
+
+ page.appendChild(text);
+ area.appendChild(page);
+
+ document.getElementById("content").scrollIntoView({behavior:"smooth"});
+}
+
+function toggleTheme(){
+ document.body.classList.toggle("light-mode");
+ const isLight=document.body.classList.contains("light-mode");
+ localStorage.setItem("noorTheme",isLight?"light":"dark");
+ updateThemeButton();
+}
+
+function updateThemeButton(){
+ const isLight=document.body.classList.contains("light-mode");
+ document.getElementById("themeToggle").textContent=
+  isLight?"🌙 الوضع الليلي":"☀️ الوضع الفاتح";
+}
+
+function loadTheme(){
+ if(localStorage.getItem("noorTheme")==="light"){
+  document.body.classList.add("light-mode");
+ }
+ updateThemeButton();
+}
+loadTheme();
+</script>
+</body>
+</html>
